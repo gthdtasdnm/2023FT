@@ -1,0 +1,123 @@
+@startuml
+class shapes.DrawRectangleTest {
++ void testTransitionToDragging()
++ void testTransitionToDragging2()
++ void testDraggingSetsEndPoint()
++ void testTransitionBackToWaitForClick()
++ void testIllegalMouseUpInWaitForClick()
++ void testIllegalMouseDownInDragging()
+}
+note left of shapes.DrawRectangleTest::testTransitionToDragging()
+Test aus der Aufgabe
+end note
+note right of shapes.DrawRectangleTest::testTransitionToDragging2()
+Eigene Tests
+end note
+
+class shapes.Rectangle {
+- Pos a
+- Pos b
++ <<Create>> Rectangle()
++ <<Create>> Rectangle(Pos,Pos)
++ Pos getA()
++ Pos getB()
++ void setA(Pos)
++ void setB(Pos)
++ void accept(Visitor)
+}
+
+
+interface shapes.Visitor {
+~ void visit(Circle)
+~ void visit(Rectangle)
+}
+
+class shapes.WaitForClick {
+- DrawRectangle context
++ <<Create>> WaitForClick(DrawRectangle)
++ void mouseUp(Pos)
++ void mouseDown(Pos)
++ void mouseMove(Pos)
+}
+
+
+class shapes.VisitorDemo {
++ {static} void main(String[])
+}
+
+class shapes.Dragging {
+- DrawRectangle context
++ <<Create>> Dragging(DrawRectangle)
++ void mouseUp(Pos)
++ void mouseDown(Pos)
++ void mouseMove(Pos)
+}
+
+
+class shapes.PrintVisitor {
+- int i
++ void visit(Circle)
++ void visit(Rectangle)
+}
+
+
+class shapes.PosTest {
++ void testToString()
+}
+
+class shapes.DrawRectangle {
+~ WaitForClick waitForClick
+~ Dragging dragging
+- Rectangle rect
+- State state
+~ void setState(State)
++ Rectangle getRectangle()
++ void mouseDown(Pos)
++ void mouseUp(Pos)
++ void mouseMove(Pos)
+}
+
+
+class shapes.Circle {
+- int radius
+- Pos center
++ <<Create>> Circle()
++ <<Create>> Circle(Pos,int)
++ int getRadius()
++ Pos getCenter()
++ void setRadius(int)
++ void setCenter(Pos)
++ void accept(Visitor)
+}
+
+
+interface shapes.Shape {
+~ void accept(Visitor)
+}
+
+class shapes.Pos {
+- int x
++ <<Create>> Pos()
++ <<Create>> Pos(int,int)
++ int getX()
++ int getY()
++ String toString()
++ int hashCode()
++ boolean equals(Object)
+}
+
+
+interface shapes.State {
+~ void mouseUp(Pos)
+~ void mouseDown(Pos)
+~ void mouseMove(Pos)
+}
+
+
+
+shapes.Shape <|.. shapes.Rectangle
+shapes.State <|.. shapes.WaitForClick
+shapes.State <|.. shapes.Dragging
+shapes.Visitor <|.. shapes.PrintVisitor
+shapes.Shape <|.. shapes.Circle
+@enduml
