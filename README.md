@@ -1,25 +1,47 @@
-# Altklausur 2023FT – Programmieraufgaben
+# 🧾 Altklausur 2023FT – Formenbibliothek & Zustandsautomat
 
-Dies ist der begleitende Code zur Altklausur **2023FT**.
+Dieses Repository enthält eine vollständige Lösung zur **OOP-Klausur 2023FT** der Universität der Bundeswehr München (27. Juni 2023).
 
-## Struktur
+## 📁 Struktur
 
-- **`A1/`** enthält den Code für **Aufgabe 1**.
-- **`shapes/`** enthält den gesamten restlichen Code für die Aufgaben 2–5.
+Der Code ist in zwei Teile untergliedert:
 
-## Hinweise zur Bearbeitung
+### 📌 `A1/` – Allgemeine Java-Aufgaben (Aufgabe 1)
+- Enthält kleine Klassen zur Analyse von Java-Code (z. B. `Foo`, `Overload`, `MagicNumber`, `SimpleNumber`)
+- Relevante Themen: Konstruktoren, `this`, Overloading, Vererbung, Initialisierung
 
-- Schaut euch die **Testfälle** an. Führt sie aus und analysiert, wie der Code funktioniert.
-- Die Aufgaben basieren auf den folgenden Entwurfsmustern:
-  - **State Pattern**
-  - **Visitor Pattern**
-  - **Composite Pattern**
+### 📐 `shapes/` – Hauptteil des Projekts (Aufgaben 2–5)
+- **Formen**
+  - `Circle`, `Rectangle` – Umsetzung einfacher 2D-Formen
+  - `Shape` – Interface für alle Formen mit Visitor-Support
+- **Geometrie & Daten**
+  - `Pos` – 2D-Position (unveränderlich, equals, hashCode, toString)
+- **Visitor Pattern**
+  - `Visitor` – Interface für alle Besucher
+  - `PrintVisitor` – Konkreter Visitor mit fortlaufender Nummerierung
+- **Zustandsautomat (State Pattern)**
+  - `DrawRectangle` – Hauptklasse zum Zeichnen per Klick und Drag
+  - `WaitForClick`, `Dragging` – Zustandsklassen zur Rechteck-Erstellung
+  - `State` – Interface für Mausereignisse
+- **Tests & Visualisierung**
+  - `PosTest`, `DrawRectangleTest` – JUnit-Tests
+  - `ShapesUML.png`, `StateUML.png` – UML-Diagramme
+  - `.puml`-Dateien zur eigenen PlantUML-Nutzung
+  - `VisitorDemo` – Beispielausgabe für `PrintVisitor`
 
-## UML-Diagramme
+## 🧪 Tests
 
-- In `shapes/` sind auch einfache **UML-Diagramme** enthalten.
-- Diese sind **nicht vollständig wie in der Vorlesung**, helfen aber, das Projekt und die Aufgaben schneller zu verstehen.
+- Die enthaltenen Tests (`PosTest`, `DrawRectangleTest`) prüfen u. a.:
+  - Konstruktion und Darstellung von `Pos`
+  - korrekte Zustandsübergänge bei Mausklicks
+  - Konsolenausgabe der `PrintVisitor`-Funktionalität
 
-## Empfehlung
-Nutzt die Testklassen, um euer Verständnis zu überprüfen und den Ablauf Schritt für Schritt nachzuvollziehen. Das hilft beim Lernen der zugrundeliegenden Konzepte.
+## 🎯 Verwendete Entwurfsmuster
 
+- **Visitor Pattern** – für flexible Erweiterung der Zeichenoperationen
+- **State Pattern** – zur Steuerung von Benutzerinteraktionen (Zeichenprozess)
+- **Encapsulation & Immutability** – z. B. in `Pos`
+
+---
+
+Viel Erfolg beim Durcharbeiten der Aufgaben und beim Üben fürs nächste Mal!
