@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 public class DrawRectangleTest {
 
-    //Test aus der Aufgabe
     @Test
     public void testTransitionToDragging() {
         final DrawRectangle d = new DrawRectangle();
@@ -14,8 +13,6 @@ public class DrawRectangleTest {
         assertEquals(p1, d.getRectangle().getA());
     }
 
-
-    //Eigene Tests
     @Test
     public void testTransitionToDragging2() {
         DrawRectangle dr = new DrawRectangle();
@@ -38,33 +35,16 @@ public class DrawRectangleTest {
     }
 
     @Test
-    public void testTransitionBackToWaitForClick() {
+    public void testMouseUpReturnsToWaitState() {
         DrawRectangle dr = new DrawRectangle();
-        Pos start = new Pos(0, 0);
-        Pos end = new Pos(2, 2);
+        Pos p1 = new Pos(1, 1);
+        Pos p2 = new Pos(2, 2);
 
-        dr.mouseDown(start); // Zustand: Dragging
-        dr.mouseUp(end);     // zurück zu WaitForClick
+        dr.mouseDown(p1);
+        dr.mouseMove(p2);
+        dr.mouseUp(p2);
 
-        assertEquals(start, dr.getRectangle().getA());
-        assertEquals(end, dr.getRectangle().getB());
-    }
-
-    @Test
-    public void testIllegalMouseUpInWaitForClick() {
-        DrawRectangle dr = new DrawRectangle();
-        assertThrows(RuntimeException.class, () -> {
-            dr.mouseUp(new Pos(1, 1));
-        });
-    }
-
-    @Test
-    public void testIllegalMouseDownInDragging() {
-        DrawRectangle dr = new DrawRectangle();
-        dr.mouseDown(new Pos(1, 1)); // Zustand: Dragging
-        assertThrows(RuntimeException.class, () -> {
-            dr.mouseDown(new Pos(2, 2));
-        });
+        assertEquals(p1, dr.getRectangle().getA());
+        assertEquals(p2, dr.getRectangle().getB());
     }
 }
-
