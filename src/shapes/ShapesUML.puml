@@ -1,18 +1,42 @@
 @startuml
-class shapes.DrawRectangleTest {
-+ void testTransitionToDragging()
-+ void testTransitionToDragging2()
-+ void testDraggingSetsEndPoint()
-+ void testTransitionBackToWaitForClick()
-+ void testIllegalMouseUpInWaitForClick()
-+ void testIllegalMouseDownInDragging()
+class shapes.PrintVisitor {
+- int i
++ void visit(Circle)
++ void visit(Rectangle)
 }
-note left of shapes.DrawRectangleTest::testTransitionToDragging()
-Test aus der Aufgabe
-end note
-note right of shapes.DrawRectangleTest::testTransitionToDragging2()
-Eigene Tests
-end note
+
+
+class shapes.DrawRectangle {
+- State WaitForClick
+- State Dragging
+- Rectangle rect
+- State state
+~ void setState(State)
++ Rectangle getRectangle()
++ void mouseDown(Pos)
++ void mouseUp(Pos)
++ void mouseMove(Pos)
+}
+
+
+abstract class shapes.DrawRectangle$State {
+~ {abstract}void mouseUp(Pos)
+~ {abstract}void mouseDown(Pos)
+~ {abstract}void mouseMove(Pos)
+}
+
+class shapes.Circle {
+- int radius
+- Pos center
++ <<Create>> Circle()
++ <<Create>> Circle(Pos,int)
++ int getRadius()
++ Pos getCenter()
++ void setRadius(int)
++ void setCenter(Pos)
++ void accept(Visitor)
+}
+
 
 class shapes.Rectangle {
 - Pos a
@@ -32,65 +56,6 @@ interface shapes.Visitor {
 ~ void visit(Rectangle)
 }
 
-class shapes.WaitForClick {
-- DrawRectangle context
-+ <<Create>> WaitForClick(DrawRectangle)
-+ void mouseUp(Pos)
-+ void mouseDown(Pos)
-+ void mouseMove(Pos)
-}
-
-
-class shapes.VisitorDemo {
-+ {static} void main(String[])
-}
-
-class shapes.Dragging {
-- DrawRectangle context
-+ <<Create>> Dragging(DrawRectangle)
-+ void mouseUp(Pos)
-+ void mouseDown(Pos)
-+ void mouseMove(Pos)
-}
-
-
-class shapes.PrintVisitor {
-- int i
-+ void visit(Circle)
-+ void visit(Rectangle)
-}
-
-
-class shapes.PosTest {
-+ void testToString()
-}
-
-class shapes.DrawRectangle {
-~ WaitForClick waitForClick
-~ Dragging dragging
-- Rectangle rect
-- State state
-~ void setState(State)
-+ Rectangle getRectangle()
-+ void mouseDown(Pos)
-+ void mouseUp(Pos)
-+ void mouseMove(Pos)
-}
-
-
-class shapes.Circle {
-- int radius
-- Pos center
-+ <<Create>> Circle()
-+ <<Create>> Circle(Pos,int)
-+ int getRadius()
-+ Pos getCenter()
-+ void setRadius(int)
-+ void setCenter(Pos)
-+ void accept(Visitor)
-}
-
-
 interface shapes.Shape {
 ~ void accept(Visitor)
 }
@@ -107,17 +72,10 @@ class shapes.Pos {
 }
 
 
-interface shapes.State {
-~ void mouseUp(Pos)
-~ void mouseDown(Pos)
-~ void mouseMove(Pos)
-}
 
 
-
-shapes.Shape <|.. shapes.Rectangle
-shapes.State <|.. shapes.WaitForClick
-shapes.State <|.. shapes.Dragging
 shapes.Visitor <|.. shapes.PrintVisitor
+shapes.DrawRectangle +.. shapes.DrawRectangle$State
 shapes.Shape <|.. shapes.Circle
+shapes.Shape <|.. shapes.Rectangle
 @enduml
