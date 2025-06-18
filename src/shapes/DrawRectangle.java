@@ -2,13 +2,14 @@ package shapes;
 
 public class DrawRectangle {
     private abstract class State {
+        //Abstrakte Klasse State aus denen die States gemacht werden
         abstract void mouseUp(Pos p);
         abstract void mouseDown(Pos p);
         abstract void mouseMove(Pos p);
     }
 
     private final State WaitForClick = new State(){
-
+        //WaitForClick als Unterklasse
         @Override
         public void mouseUp(Pos p) {
             throw new RuntimeException();
@@ -27,7 +28,7 @@ public class DrawRectangle {
     };
 
     private final State Dragging = new State(){
-
+        //Dragging als Unterklasse
         @Override
         public void mouseUp(Pos p) {
             rect.setB(p);
@@ -45,9 +46,11 @@ public class DrawRectangle {
         }
     };
 
+    //Setzen des Anfangsstates WaitForClick
     private final Rectangle rect = new Rectangle();
     private State state = WaitForClick;
 
+    //Methoden der Klasse DrawRectangle
     void setState(State s) {
         state = s;
     }
@@ -56,6 +59,7 @@ public class DrawRectangle {
         return rect;
     }
 
+    //Zuweisung der States mit der Oberklasse DrawRectangle
     public void mouseDown(Pos p) {
         state.mouseDown(p);
     }
